@@ -1,0 +1,8 @@
+.idea
+.svn
+app/cache/*
+app/logs/*
+web/assets/attachments/*
+parameters.yml
+parameters.yml.dist
+!.gitignore
