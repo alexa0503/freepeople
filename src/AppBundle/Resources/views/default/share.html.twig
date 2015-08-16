@@ -1,0 +1,28 @@
+{% extends 'AppBundle:default:layout.html.twig' %}
+{% block content %}
+	<div class="resPage2" style="background:url({{ asset('assets/default/images/') }}res{{ t }}Bg.jpg) center top no-repeat;">
+		<div class="innerDiv">
+			<img src="{{ asset('assets/default/images/') }}res{{ t }}Txt.png" class="res1Txt" style="margin:-41px 0 0 -125px;">
+			<img src="{{ asset('assets/default/images/') }}shareTxt1.png" class="shareTxt1">
+			{% if t == 3 %}
+				<img src="{{ asset('assets/default/images/shareTxt2b.png') }}" class="shareTxt2">
+			{%  else %}
+				<img src="{{ asset('assets/default/images/shareTxt2.png') }}" class="shareTxt2">
+			{% endif %}
+			
+			<a href="{{ url('_') }}" class="shareBtn1"><img src="{{ asset('assets/default/images/') }}shareBtn1.png"></a>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$(document).ready(function(){
+
+		});
+		
+		function showRp2(){
+			$('.resPage2').fadeIn(1000);
+		}
+	</script>
+{% endblock %}

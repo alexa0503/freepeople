@@ -1,0 +1,20 @@
+{% extends 'AppBundle:default:base.html.twig' %}
+{% block body %}
+    <!--页面背景-->
+    <style>
+        body{ background:url({{ asset('assets/default/images/') }}{% block bkgImg %}imdexBg.jpg{% endblock %}) center top no-repeat #FFFFFF;}
+    }
+    </style>
+    <div class="pageMain">
+        <div class="innerDiv">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    {% block pop %}
+        <div class="popBg" style="display:none;"></div>
+        <div class="pop popShare" onClick="closePop();" style="display:none;"></div>
+        <img src="{{ asset('assets/default/images/loading.gif') }}" class="pop popLoading" style="display:none;">
+        <img src="{{ asset('assets/default/images/rule.jpg') }}" class="pop popRule" onClick="closePop();" style="display:none;">
+    {% endblock %}
+{% endblock %}

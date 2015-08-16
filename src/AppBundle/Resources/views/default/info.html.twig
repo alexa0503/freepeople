@@ -1,0 +1,49 @@
+{% extends 'AppBundle:default:layout.html.twig' %}
+{% block content %}
+	<div class="abs infoPage">
+				<div class="innerDiv">
+					<input type="text" class="infoTxt infoTxt1">
+					<input type="email" class="infoTxt infoTxt2">
+					<a href="javascript:void(0);" class="abs formBtn1" onClick="submitInfo();"><img src="{{ asset('assets/default/images/formBtn1.png') }}"></a>
+					
+					<a href="javascript:void(0);" onClick="showPop('Rule');" class="formBtn2"><img src="{{ asset('assets/default/images/formBtn2.png') }}"></a>
+					<img src="{{ asset('assets/default/images/formWWW.png') }}" class="formWWW">
+				</div>
+			</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$(document).ready(function(){
+
+		});
+		
+		function submitInfo(){
+			var iName=$.trim($('.infoTxt1').val());
+			var iEmail=$.trim($('.infoTxt2').val());
+			var emailReg=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			if(iName==''){
+				alert('请输入姓名');
+				return;
+			}
+			else if(iEmail==''||!emailReg.test(iEmail)){
+				alert('请输入正确的电子邮箱');
+				return;
+			}
+			else{
+				showPop('Loading');
+				var url = '{{ url("_post") }}';
+				$.post(url,{name:iName,email:iEmail},function(res){
+					closePop();
+					if(res.ret == 0){
+						window.location.href=res.url;
+					}
+					else{
+						alert(res.msg)
+					}
+				},"JSON");
+			}
+		}
+	</script>
+{% endblock %}
+{% block bkgImg %}testBg.jpg{% endblock %}

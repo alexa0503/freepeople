@@ -1,0 +1,176 @@
+{% extends 'AppBundle:default:layout.html.twig' %}
+{% block content %}
+	<div class="quBlock quBlock1">
+		<div class="innerDiv">
+			<ul class="quBlockUl quBlockUl1">
+				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+			</ul>
+			<a href="javascript:void(0);" onClick="goNextQu(1);" class="abs testBtn1"><img src="{{ asset('assets/default/images/testBtn1.jpg') }}"></a>
+		</div>
+	</div>
+
+	<div class="quBlock quBlock2" style="display:none;">
+		<div class="innerDiv">
+			<ul class="quBlockUl quBlockUl2">
+				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+			</ul>
+			<a href="javascript:void(0);" onClick="goNextQu(2);" class="abs testBtn1"><img src="{{ asset('assets/default/images/testBtn1.jpg') }}"></a>
+		</div>
+	</div>
+
+	<div class="quBlock quBlock3" style="display:none;">
+		<div class="innerDiv">
+			<ul class="quBlockUl quBlockUl3">
+				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+			</ul>
+			<a href="javascript:void(0);" onClick="goNextQu(3);" class="abs testBtn1"><img src="{{ asset('assets/default/images/testBtn1.jpg') }}"></a>
+		</div>
+	</div>
+
+	<div class="quBlock quBlock4" style="display:none;">
+		<div class="innerDiv">
+			<ul class="quBlockUl quBlockUl4">
+				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+			</ul>
+			<a href="javascript:void(0);" onClick="goNextQu(4);" class="abs testBtn1"><img src="{{ asset('assets/default/images/testBtn1.jpg') }}"></a>
+		</div>
+	</div>
+
+	<div class="quBlock quBlock5" style="display:none;">
+		<div class="innerDiv">
+			<ul class="quBlockUl quBlockUl5">
+				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
+			</ul>
+			<a href="javascript:void(0);" onClick="goNextQu(5);" class="abs testBtn1"><img src="{{ asset('assets/default/images/testBtn1.jpg') }}"></a>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$(document).ready(function(){
+			$('.quBlockUl a').click(function(){
+				$(this).parents('.quBlockUl').find('a').removeClass('on');
+				$(this).addClass('on');
+			});
+		});
+		
+		var resPoint=0;
+
+		function goNextQu(qn){
+			if(qn==1){
+				$('.quBlock1').fadeOut(500);
+				$('.quBlock2').fadeIn(500);
+			}
+			else if(qn==2){
+				$('.quBlock2').fadeOut(500);
+				$('.quBlock3').fadeIn(500);
+			}
+			else if(qn==3){
+				$('.quBlock3').fadeOut(500);
+				$('.quBlock4').fadeIn(500);
+			}
+			else if(qn==4){
+				$('.quBlock4').fadeOut(500);
+				$('.quBlock5').fadeIn(500);
+			}
+			else if(qn==5){
+				var q1res=$('.quBlockUl1 a').index($('.quBlockUl1 a.on'));
+				var q2res=$('.quBlockUl2 a').index($('.quBlockUl2 a.on'));
+				var q3res=$('.quBlockUl3 a').index($('.quBlockUl3 a.on'));
+				var q4res=$('.quBlockUl4 a').index($('.quBlockUl4 a.on'));
+				var q5res=$('.quBlockUl5 a').index($('.quBlockUl5 a.on'));
+				if(q1res==0){
+					resPoint=resPoint+1;
+				}
+				else if(q1res==1){
+					resPoint=resPoint+2;
+				}
+				else if(q1res==2){
+					resPoint=resPoint+3;
+				}
+				else if(q1res==3){
+					resPoint=resPoint+0;
+				}
+
+				if(q2res==0){
+					resPoint=resPoint+3;
+				}
+				else if(q2res==1){
+					resPoint=resPoint+1;
+				}
+				else if(q2res==2){
+					resPoint=resPoint+2;
+				}
+				else if(q2res==3){
+					resPoint=resPoint+0;
+				}
+
+				if(q3res==0){
+					resPoint=resPoint+0;
+				}
+				else if(q3res==1){
+					resPoint=resPoint+1;
+				}
+				else if(q3res==2){
+					resPoint=resPoint+2;
+				}
+				else if(q3res==3){
+					resPoint=resPoint+3;
+				}
+
+				if(q4res==0){
+					resPoint=resPoint+1;
+				}
+				else if(q4res==1){
+					resPoint=resPoint+0;
+				}
+				else if(q4res==2){
+					resPoint=resPoint+3;
+				}
+				else if(q4res==3){
+					resPoint=resPoint+2;
+				}
+
+				if(q5res==0){
+					resPoint=resPoint+0;
+				}
+				else if(q5res==1){
+					resPoint=resPoint+1;
+				}
+				else if(q5res==2){
+					resPoint=resPoint+2;
+				}
+				else if(q5res==3){
+					resPoint=resPoint+3;
+				}
+
+				if(resPoint<=5){
+					window.location.href='{{ url("_res",{t:1}) }}';
+				}
+				else if(resPoint>5&&resPoint<=10){
+					window.location.href='{{ url("_res",{t:1}) }}';
+				}
+				else{
+					window.location.href='{{ url("_res",{t:1}) }}';
+				}
+			}
+		}
+	</script>
+{% endblock %}
+{% block bkgImg %}testBg.jpg{% endblock %}

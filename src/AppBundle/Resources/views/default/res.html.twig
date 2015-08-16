@@ -1,0 +1,29 @@
+{% extends 'AppBundle:default:layout.html.twig' %}
+{% block content %}
+	
+        	<div class="resPage1">
+            	<div class="innerDiv">
+                	<img src="{{ asset('assets/default/images/') }}res{{ t }}.jpg">
+                    <a href="javascript:void(0);" class="abs resBtn1" onClick="showRp2();"><img src="{{ asset('assets/default/images/resBtn1.png') }}"></a>
+                </div>
+            </div>
+            <img src="{{ asset('assets/default/images/resImgBottom.png') }}" width="418" class="abs resImgBottom">
+            
+            <div class="resPage2" style="background:url({{ asset('assets/default/images/') }}res{{ t }}Bg.jpg) center top no-repeat; display:none;">
+            	<div class="innerDiv">
+                	<img src="{{ asset('assets/default/images/') }}res{{ t }}Txt.png" class="res1Txt" style="margin:-41px 0 0 -125px;">
+                    <a href="javascript:void(0);" class="resBtn2" onClick="showPop('Share');"><img src="{{ asset('assets/default/images/resBtn2.png') }}"></a>
+                </div>
+            </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+ <script>
+$(document).ready(function(){	
+});
+function showRp2(){
+	$('.resPage2').fadeIn(1000);
+}
+  </script>
+{% endblock %}
+{% block bkgImg %}testBg.jpg{% endblock %}
