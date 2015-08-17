@@ -51,7 +51,7 @@ class WechatUser
      */
     protected $createIp;
     /**
-     * @ORM\OneToOne(targetEntity="Form", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Form", mappedBy="user")
      */
     protected $forms;
     /**
@@ -299,5 +299,28 @@ class WechatUser
     public function getForms()
     {
         return $this->forms;
+    }
+
+    /**
+     * Add forms
+     *
+     * @param \AppBundle\Entity\Form $forms
+     * @return WechatUser
+     */
+    public function addForm(\AppBundle\Entity\Form $forms)
+    {
+        $this->forms[] = $forms;
+
+        return $this;
+    }
+
+    /**
+     * Remove forms
+     *
+     * @param \AppBundle\Entity\Form $forms
+     */
+    public function removeForm(\AppBundle\Entity\Form $forms)
+    {
+        $this->forms->removeElement($forms);
     }
 }

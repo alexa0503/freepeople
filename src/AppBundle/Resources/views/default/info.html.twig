@@ -2,8 +2,8 @@
 {% block content %}
 	<div class="abs infoPage">
 				<div class="innerDiv">
-					<input type="text" class="infoTxt infoTxt1">
-					<input type="email" class="infoTxt infoTxt2">
+					<input type="text" class="infoTxt infoTxt1" value="{% if form is defined %}{{ form.username }}{% endif %}">
+					<input type="email" class="infoTxt infoTxt2" value="{% if form is defined %}{{ form.email }}{% endif %}">
 					<a href="javascript:void(0);" class="abs formBtn1" onClick="submitInfo();"><img src="{{ asset('assets/default/images/formBtn1.png') }}"></a>
 					
 					<a href="javascript:void(0);" onClick="showPop('Rule');" class="formBtn2"><img src="{{ asset('assets/default/images/formBtn2.png') }}"></a>
@@ -35,7 +35,7 @@
 				var url = '{{ url("_post") }}';
 				$.post(url,{name:iName,email:iEmail},function(res){
 					closePop();
-					if(res.ret == 0){
+					if(res.ret == 0 ||res.ret == 1300){
 						window.location.href=res.url;
 					}
 					else{

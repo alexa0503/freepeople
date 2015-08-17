@@ -52,8 +52,8 @@
                     //alert('用户点击发送给朋友');
                 },
                 success: function (res) {
-                    {% if app.session.get("wx_share_success_url") is not empty %}
-                    location.href = '{{ app.session.get("wx_share_success_url") }}';
+                    {% if wx_share_success_url is defined %}
+                    location.href = '{{ wx_share_success_url }}';
                     {% endif %}
                 },
                 cancel: function (res) {

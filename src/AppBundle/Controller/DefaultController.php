@@ -46,9 +46,10 @@ class DefaultController extends Controller
             $t = 1;
         $session = $request->getSession();
         $session->set('resType', $t);
+        $session->set('wx_share_url', $this->generateUrl('_share', array('t'=>$t)));
         return $this->render('AppBundle:default:res.html.twig',array(
             't'=>$t,
-            'wx_share_success_url' => $this->generateUrl('_share', array('t'=>$t)),
+            'wx_share_success_url' => $this->generateUrl('_info'),
         ));
     }
     /**
@@ -65,8 +66,28 @@ class DefaultController extends Controller
      */
     public function infoAction(Request $request)
     {
-        $session = $request->getSession();
-        return $this->render('AppBundle:default:info.html.twig');
+        $user= $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Form');
+        $now = time();
+        $n = date('N', $now);
+        $createTime1= date('Y-m-d 00:00:00', $now-($n-1)*24*3600);
+        $createTime2= date('Y-m-d 23:59:59', $now+(7-$n)*24*3600);
+        $qb = $repo->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->where('a.user = :user AND a.createTime >= :createTime1 AND a.createTime <= :createTime2')
+            ->setParameter('user', $user)
+            ->setParameter('createTime1', $createTime1)
+            ->setParameter('createTime2', $createTime2);
+        $count = $qb->getQuery()->getSingleScalarResult();
+        if($count >= 3){
+            return $this->redirect($this->generateUrl('_fail'));
+        }
+
+        $user = $this->getUser();
+        $forms = $user->getForms();
+        $form = null == $forms ? null : $forms[0];
+        return $this->render('AppBundle:default:info.html.twig', array('form'=>$form));
     }
     /**
      * @Route("/post/", name="_post")
@@ -77,7 +98,7 @@ class DefaultController extends Controller
         $res = array(
             'ret' => 0,
             'msg' => '',
-            'url' => $this->generateUrl('_success'),
+            'url' => '',
         );
         $t = $session->get('resType');
         $username = $request->get('name');
@@ -99,18 +120,42 @@ class DefaultController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $user = $this->getUser();
                 $code = $em->getRepository('AppBundle:ExchangeCode')->findOneBy( array('isUsed'=>0));
-                $form = new Entity\Form();
-                $form->setUsername($username);
-                $form->setEmail($email);
-                $form->setType($t);
-                $form->setCreateIp($request->getClientIp());
-                $form->setCreateTime(new \DateTime('now'));
-                $form->setUser($user);
-                $form->setCode($code);
-                $code->setIsUsed(1);
-                $em->persist($form);
-                $em->persist($code);
-                $em->flush();
+                $repo = $em->getRepository('AppBundle:Form');
+                $now = time();
+                $n = date('N', $now);
+                $createTime1= date('Y-m-d 00:00:00', $now-($n-1)*24*3600);
+                $createTime2= date('Y-m-d 23:59:59', $now+(7-$n)*24*3600);
+                $qb = $repo->createQueryBuilder('a')
+                    ->select('COUNT(a)')
+                    ->where('a.user = :user AND a.createTime >= :createTime1 AND a.createTime <= :createTime2')
+                    ->setParameter('user', $user)
+                    ->setParameter('createTime1', $createTime1)
+                    ->setParameter('createTime2', $createTime2);
+                $count = $qb->getQuery()->getSingleScalarResult();
+                if(null == $code){
+                    $res['ret'] = 1200;
+                    $res['msg'] = '你来晚了喔，已经没有优惠券了~';
+                }
+                elseif($count >= 3){
+                    $res['ret'] = 1300;
+                    $res['msg'] = '一周只有3次机会喔~';
+                    $res['url'] = $this->generateUrl('_fail');
+                }
+                else{
+                    $form = new Entity\Form();
+                    $form->setUsername($username);
+                    $form->setEmail($email);
+                    $form->setType($t);
+                    $form->setCreateIp($request->getClientIp());
+                    $form->setCreateTime(new \DateTime('now'));
+                    $form->setUser($user);
+                    $form->setCode($code);
+                    $code->setIsUsed(1);
+                    $em->persist($form);
+                    $em->persist($code);
+                    $em->flush();
+                    $res['url'] = $this->generateUrl('_success', array('id'=>$form->getId()));
+                }
                 $session->set('resType',null);
             } catch (Exception $e) {
                 $res['ret'] = 1101;
@@ -131,6 +176,13 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('_index'));
 
         return $this->render('AppBundle:default:success.html.twig', array('form'=>$form));
+    }
+    /**
+     * @Route("/fail/", name="_fail")
+     */
+    public function failAction(Request $request)
+    {
+        return $this->render('AppBundle:default:fail.html.twig');
     }
     /**
      * @Route("callback/", name="_callback")
