@@ -36,6 +36,7 @@ $(document).ready(function(){
 	$('.endPage1').css('top',(wHeight-661)/2+'px');
 	$('.endPage2').css('top',(wHeight-661)/2+'px');
 	$('.endPage3').css('top',(wHeight-661)/2+'px');
+	$('.myCodePage').css('top',(wHeight-661)/2+'px');
 	});
 	
 function showPop(obj){

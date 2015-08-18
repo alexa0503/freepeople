@@ -26,6 +26,8 @@ select,input,textarea{font-family:inherit; outline:none;}
 .indexBtn2{ left:30px; bottom:37px;}
 .indexWWW{ left:30px; bottom:20px;}
 
+.indexBtn3{ right:20px; bottom:20px;}
+
 .indexAct1{
 -webkit-animation:indexAct1 1s 0s linear both;
 -moz-animation:indexAct1 1s 0s linear both;
@@ -99,8 +101,16 @@ select,input,textarea{font-family:inherit; outline:none;}
 .endPage3{ background:url(../images/endBg3.png) 0 0 no-repeat; width:456px; height:661px; left:92px; top:0;}
 
 .endQc{ left:148px; top:354px;}
-.endBtn1{ left:37px; top:577px;}
-.endBtn2{ left:240px; top:577px;}
+.endBtn1{ left:8px; top:577px;}
+.endBtn2{ left:158px; top:577px;}
+.endBtn3{ left:308px; top:577px;}
+
 .endCode{ background:none; border:none; font-size:20px; color:#333; line-height:26px; position:absolute; left:210px; top:165px;}
 
 .popRule{ left:50%; margin:-520px 0 0 -320px;}
+
+.myCodePage{ background:url(../images/myCodeBg.png) 0 0 no-repeat; width:456px; height:661px; left:92px; top:0;}
+.endNewBtn1{ left:37px; top:577px;}
+.endNewBtn2{ left:240px; top:577px;}
+.myCode{ width:100%; position:absolute; left:37px; top:180px;}
+.myCode li{ float:left; width:180px; height:26px; padding-bottom:10px; padding-left:14px; font-size:16px; color:#333; line-height:24px;}

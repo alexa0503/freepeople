@@ -46,10 +46,11 @@ class DefaultController extends Controller
             $t = 1;
         $session = $request->getSession();
         $session->set('resType', $t);
-        $session->set('wx_share_url', $this->generateUrl('_share', array('t'=>$t)));
+        $session->set('wx_share_url',  'http://'.$request->getHttpHost().$this->generateUrl('_share', array('t'=>$t)));
         return $this->render('AppBundle:default:res.html.twig',array(
             't'=>$t,
-            'wx_share_success_url' => $this->generateUrl('_info'),
+            'wx_share_success_url' => ''.$this->generateUrl('_info'),
+            'wechat_img_url'=>'images/share'.$t.'.jpg'
         ));
     }
     /**
@@ -178,11 +179,40 @@ class DefaultController extends Controller
         return $this->render('AppBundle:default:success.html.twig', array('form'=>$form));
     }
     /**
+     * @Route("/codes/", name="_codes")
+     */
+    public function codesAction(Request $request, $id = 0)
+    {
+        $user = $this->getUser();
+        $forms = $this->getDoctrine()->getRepository('AppBundle:Form')->findBy(array('user'=>$user));
+        
+
+        return $this->render('AppBundle:default:codes.html.twig', array('forms'=>$forms));
+    }
+    /**
      * @Route("/fail/", name="_fail")
      */
     public function failAction(Request $request)
     {
         return $this->render('AppBundle:default:fail.html.twig');
+    }
+    /**
+     * @Route("/import/", name="_import")
+     */
+    public function importAction()
+    {
+        /*
+        $string = file_get_contents("11.csv");
+        $arr = explode("\n", $string);
+        $em = $this->getDoctrine()->getManager();
+        foreach ($arr as $value) {
+            $code = new Entity\ExchangeCode;
+            $code->setCode(trim($value));
+            $em->persist($code);
+        }
+        $em->flush();
+        */
+        return new Response('success');
     }
     /**
      * @Route("callback/", name="_callback")
