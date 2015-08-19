@@ -18,11 +18,6 @@ use Symfony\Component\Validator\Constraints\Time;
 class AdminController extends Controller
 {
     protected $pageSize = 30;
-    //页面模板地址
-    protected $pageTemplate = array(
-        'page.html.twig' => 'page.html.twig'
-    );
-
     /**
      * @Route("/admin/", name="admin_index")
      */
@@ -31,16 +26,11 @@ class AdminController extends Controller
         return $this->render('AppBundle:admin:index.html.twig');
     }
     /**
-     * @Route("/admin/creation/{fixed}", name="admin_creation")
+     * @Route("/admin/form/", name="admin_form")
      */
-    public function creationAction(Request $request, $fixed = 'n')
+    public function formAction(Request $request)
     {
-        if($fixed == 'n'){
-            $repository = $this->getDoctrine()->getRepository('AppBundle:Creation');
-        }
-        else{
-            $repository = $this->getDoctrine()->getRepository('AppBundle:FixedCreation');
-        }
+            $repository = $this->getDoctrine()->getRepository('AppBundle:Form');
         $queryBuilder = $repository->createQueryBuilder('a');
         $queryBuilder->orderBy('a.createTime', 'DESC');
         $query = $queryBuilder->getQuery();
@@ -51,26 +41,7 @@ class AdminController extends Controller
             $request->query->get('page', 1),/*page number*/
             $this->pageSize
         );
-        return $this->render('AppBundle:admin:creation.html.twig', array('pagination'=>$pagination));
-    }
-    /**
-     * @Route("/admin/win/", name="admin_win")
-     */
-    public function winAction(Request $request)
-    {
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Creation');
-        $queryBuilder = $repository->createQueryBuilder('a')
-            ->where('a.isWin = 1');
-        $queryBuilder->orderBy('a.createTime', 'DESC');
-        $query = $queryBuilder->getQuery();
-        $paginator  = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),/*page number*/
-            $this->pageSize
-        );
-        return $this->render('AppBundle:admin:win.html.twig', array('pagination'=>$pagination));
+        return $this->render('AppBundle:admin:form.html.twig', array('pagination'=>$pagination));
     }
     /**
      * @Route("/admin/user/", name="admin_user")
@@ -90,29 +61,6 @@ class AdminController extends Controller
         );
         return $this->render('AppBundle:admin:wechatUser.html.twig', array('pagination'=>$pagination));
 
-    }
-    /**
-     * @Route("/admin/log/{fixed}", name="admin_like_log")
-     */
-    public function likeLogAction(Request $request, $fixed='n')
-    {
-        if($fixed == 'n'){
-            $repository = $this->getDoctrine()->getRepository('AppBundle:LikeLog');
-        }
-        else{
-            $repository = $this->getDoctrine()->getRepository('AppBundle:FixedLikeLog');
-        }
-        $queryBuilder = $repository->createQueryBuilder('a');
-        $queryBuilder->orderBy('a.createTime', 'DESC');
-        $query = $queryBuilder->getQuery();
-        $paginator  = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),/*page number*/
-            $this->pageSize
-        );
-        return $this->render('AppBundle:admin:log.html.twig', array('pagination'=>$pagination));
     }
     /**
      * @Route("/admin/export/", name="admin_export")

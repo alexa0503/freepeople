@@ -3,7 +3,7 @@
 	<div class="quBlock quBlock1">
 		<div class="innerDiv">
 			<ul class="quBlockUl quBlockUl1">
-				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
@@ -15,7 +15,7 @@
 	<div class="quBlock quBlock2" style="display:none;">
 		<div class="innerDiv">
 			<ul class="quBlockUl quBlockUl2">
-				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
@@ -27,7 +27,7 @@
 	<div class="quBlock quBlock3" style="display:none;">
 		<div class="innerDiv">
 			<ul class="quBlockUl quBlockUl3">
-				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
@@ -39,7 +39,7 @@
 	<div class="quBlock quBlock4" style="display:none;">
 		<div class="innerDiv">
 			<ul class="quBlockUl quBlockUl4">
-				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
@@ -51,7 +51,7 @@
 	<div class="quBlock quBlock5" style="display:none;">
 		<div class="innerDiv">
 			<ul class="quBlockUl quBlockUl5">
-				<li><a href="javascript:void(0);" class="on"></a></li>
+				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
 				<li><a href="javascript:void(0);"></a></li>
@@ -74,22 +74,42 @@
 
 		function goNextQu(qn){
 			if(qn==1){
+				if($('.quBlockUl1 a').index($('.quBlockUl1 a.on'))<0){
+					alert('请选择');
+					return;
+					}
 				$('.quBlock1').fadeOut(500);
 				$('.quBlock2').fadeIn(500);
 			}
 			else if(qn==2){
+				if($('.quBlockUl2 a').index($('.quBlockUl2 a.on'))<0){
+					alert('请选择');
+					return;
+					}
 				$('.quBlock2').fadeOut(500);
 				$('.quBlock3').fadeIn(500);
 			}
 			else if(qn==3){
+				if($('.quBlockUl3 a').index($('.quBlockUl3 a.on'))<0){
+					alert('请选择');
+					return;
+					}
 				$('.quBlock3').fadeOut(500);
 				$('.quBlock4').fadeIn(500);
 			}
 			else if(qn==4){
+				if($('.quBlockUl4 a').index($('.quBlockUl4 a.on'))<0){
+					alert('请选择');
+					return;
+					}
 				$('.quBlock4').fadeOut(500);
 				$('.quBlock5').fadeIn(500);
 			}
 			else if(qn==5){
+				if($('.quBlockUl5 a').index($('.quBlockUl5 a.on'))<0){
+					alert('请选择');
+					return;
+					}
 				var q1res=$('.quBlockUl1 a').index($('.quBlockUl1 a.on'));
 				var q2res=$('.quBlockUl2 a').index($('.quBlockUl2 a.on'));
 				var q3res=$('.quBlockUl3 a').index($('.quBlockUl3 a.on'));

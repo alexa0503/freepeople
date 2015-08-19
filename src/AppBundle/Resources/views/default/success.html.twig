@@ -6,9 +6,13 @@
 						<img src="{{ asset('assets/default/images/endQc.png') }}" style="display:block; padding:355px 0 0 148px;">
 					</div>
                 	<label class="endCode">{{ form.code.code }}</label>
-                    <a href="http://www.freepeople.cn/qixi-ailian-teji/?cm_mmc=Weixin-_-SM_China-_-2015Q3-_-150819_interactivecampaign/" class="abs endBtn1"><img src="{{ asset('assets/default/images/endNewBtn1.png') }}"></a>
-                    <a href="{{ url('_index') }}" class="abs endBtn2"><img src="{{ asset('assets/default/images/endNewBtn3.png') }}"></a>
-					<a href="{{ url('_codes') }}" class="abs endBtn3"><img src="{{ asset('assets/default/images/endNewBtn2.png') }}"></a>
+					
+					<a href="http://www.freepeople.cn/qixi-ailian-teji/?cm_mmc=Weixin-_-SM_China-_-2015Q3-_-150819_interactivecampaign/" class="abs endNewBtn1"><img src="{{ asset('assets/default/images/endBtn1.png') }}"></a>
+                    <a href="{{ url('_index') }}" class="abs endNewBtn2"><img src="{{ asset('assets/default/images/endBtn2.png') }}"></a>
+                    <a href="{{ url('_codes') }}" class="endBtn3"><img src="{{ asset('assets/default/images/myCodeBtn.png') }}" style="display:block;"></a>
+					
+					<a href="javascript:void(0);" onClick="showPop('Rule');" class="formBtn2"><img src="{{ asset('assets/default/images/formBtn2.png') }}"></a>
+                    <img src="{{ asset('assets/default/images/formWWW.png') }}" class="formWWW">
                 </div>
             </div>
 {% endblock %}

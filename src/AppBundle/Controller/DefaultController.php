@@ -71,9 +71,15 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Form');
         $now = time();
-        $n = date('N', $now);
-        $createTime1= date('Y-m-d 00:00:00', $now-($n-1)*24*3600);
-        $createTime2= date('Y-m-d 23:59:59', $now+(7-$n)*24*3600);
+        //$n = date('N', $now);
+        if($now <= strtotime('2015-08-25 23:59:59')){
+            $createTime1 = '2015-08-10 00:00:00';
+            $createTime2 = '2015-08-25 23:59:59';
+        }
+        else{
+            $createTime1 = '2015-08-26 00:00:00';
+            $createTime2 = '2015-09-02 23:59:59';
+        }
         $qb = $repo->createQueryBuilder('a')
             ->select('COUNT(a)')
             ->where('a.user = :user AND a.createTime >= :createTime1 AND a.createTime <= :createTime2')
@@ -123,9 +129,14 @@ class DefaultController extends Controller
                 $code = $em->getRepository('AppBundle:ExchangeCode')->findOneBy( array('isUsed'=>0));
                 $repo = $em->getRepository('AppBundle:Form');
                 $now = time();
-                $n = date('N', $now);
-                $createTime1= date('Y-m-d 00:00:00', $now-($n-1)*24*3600);
-                $createTime2= date('Y-m-d 23:59:59', $now+(7-$n)*24*3600);
+                if($now <= strtotime('2015-08-25 23:59:59')){
+                    $createTime1 = '2015-08-10 00:00:00';
+                    $createTime2 = '2015-08-25 23:59:59';
+                }
+                else{
+                    $createTime1 = '2015-08-26 00:00:00';
+                    $createTime2 = '2015-09-02 23:59:59';
+                }
                 $qb = $repo->createQueryBuilder('a')
                     ->select('COUNT(a)')
                     ->where('a.user = :user AND a.createTime >= :createTime1 AND a.createTime <= :createTime2')
@@ -133,7 +144,11 @@ class DefaultController extends Controller
                     ->setParameter('createTime1', $createTime1)
                     ->setParameter('createTime2', $createTime2);
                 $count = $qb->getQuery()->getSingleScalarResult();
-                if(null == $code){
+                if($now >= strtotime('2015-09-03')){
+                    $res['ret'] = 1102;
+                    $res['msg'] = '你来晚了喔，活动已经结束了~';
+                }
+                elseif(null == $code){
                     $res['ret'] = 1200;
                     $res['msg'] = '你来晚了喔，已经没有优惠券了~';
                 }
@@ -184,9 +199,20 @@ class DefaultController extends Controller
     public function codesAction(Request $request, $id = 0)
     {
         $user = $this->getUser();
-        $forms = $this->getDoctrine()->getRepository('AppBundle:Form')->findBy(array('user'=>$user));
-        
-
+        $forms[0] = $this->getDoctrine()->getRepository('AppBundle:Form')->createQueryBuilder('a')
+            ->where('a.user = :user AND a.createTime >= :createTime1 AND a.createTime <= :createTime2')
+            ->setParameter('user', $user)
+            ->setParameter('createTime1', '2015-08-10 00:00:00')
+            ->setParameter('createTime2', '2015-08-25 23:59:59')
+            ->getQuery()
+            ->getResult();
+        $forms[1] = $this->getDoctrine()->getRepository('AppBundle:Form')->createQueryBuilder('a')
+            ->where('a.user = :user AND a.createTime >= :createTime1 AND a.createTime <= :createTime2')
+            ->setParameter('user', $user)
+            ->setParameter('createTime1', '2015-08-26 00:00:00')
+            ->setParameter('createTime2', '2015-09-02 23:59:59')
+            ->getQuery()
+            ->getResult();
         return $this->render('AppBundle:default:codes.html.twig', array('forms'=>$forms));
     }
     /**
