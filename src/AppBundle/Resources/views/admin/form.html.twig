@@ -10,30 +10,26 @@
       <thead>
        <tr role="row">
         <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1" style="width: 40px;">ID</th>
-        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1" style="width: 140px;">OPEN ID</th>
-        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1" style="width: 140px;">头像</th>
-        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1" style="width: 140px;">昵称</th>
-        <!--<th tabindex="0" aria-controls="table2" rowspan="1" colspan="1" style="width: 140px;">性别</th>
-        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1" style="width: 140px;">省份</th>
-        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1" style="width: 140px;">城市</th>
-        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1">国家</th>-->
-        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1" style="width: 200px;">创建时间</th>
-        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1"  style="width: 120px;">创建IP</th>
+        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1">兑换码</th>
+        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1">用户名</th>
+        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1">Email</th>
+        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1">类型</th>
+        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1">创建时间</th>
+        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1">创建IP</th>
+        <th tabindex="0" aria-controls="table2" rowspan="1" colspan="1">授权用户昵称</th>
       </tr>
      </thead>
      <tbody>
      {% for p in pagination %}
       <tr class="gradeA {% if loop.index is odd %} odd{% else %} even{% endif %}" role="row">
         <td>{{ p.id }}</td>
-        <td>{{ p.openId }}</td>
-        <td><img src="{{ p.headImg }}" title="{{ p.nickName }}" width="64" height="64"/> </td>
-        <td>{{ p.nickName }}</td>
-          <!--<td>{{ p.gender }}</td>
-          <td>{{ p.province }}</td>
-           <td>{{ p.city }}</td>
-            <td>{{ p.country }}</td>-->
+        <td>{{ p.code.code }}</td>
+        <td>{{ p.username }}</td>
+        <td>{{ p.email }}</td>
+        <td>{{ p.type }}</td>
           <td>{{ p.createTime | date("Y-m-d H:i:s") }}</td>
           <td>{{ p.createIp }}</td>
+          <td>{{ p.user.nickname }}</td>
       </tr>
       {% endfor %}
       </tbody>
